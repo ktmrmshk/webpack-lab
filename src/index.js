@@ -1,18 +1,17 @@
-import _ from 'lodash';
-import printMe from './print.js';
 
-function component() {
-  const element = document.createElement('div');
-  const btn = document.createElement('button');
+function getComponent() {
+  return import(/* webpackChunkName: "lodash" */ 'lodash').then( ({default: _}) => {
+   
+    const element = document.createElement('div');
+    const btn = document.createElement('button');
 
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-
-
-  btn.innerHTML = 'Click me and check the colsole!';
-  btn.onclick = printMe;
-  element.appendChild(btn);
-
-  return element;
+    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+    
+    return element;
+  });
 }
 
-document.body.appendChild(component());
+getComponent().then(component =>{
+  document.body.appendChild(component());
+});
+
